@@ -1,0 +1,33 @@
+function Run_SSR_EmoryMonkey(f_EmoryMonkeyTimeSeries)
+proc_path = '/lustre/scr/w/e/wendyuu';
+load(f_EmoryMonkeyTimeSeries);
+addpath(fullfile(proc_path,'SSR'),fullfile(proc_path,'SSR/code'),fullfile(proc_path,'SSR/code/utils'),fullfile(proc_path,'SSR/code/base'),fullfile(proc_path,'SSR/code/fair'));
+% Inputs:
+%  syntheticTimeSeries - longitudinal image series
+%  mask                - white matter mask of the last time-point
+%  t                   - time-points
+%  m                   - image resolution
+%  omega               - physical image dimension
+%  alpha               - regularization weigth
+%  outfile             - path to save results
+%  plot                - [] = turn off plotting
+%  verbose             - verbose level
+
+SSR_setup_EMORY;
+alpha = 750;
+outfile = strrep(f_EmoryMonkeyTimeSeries, '.mat', '_SSR_Output.mat');
+prefix = strrep(f_EmoryMonkeyTimeSeries, '.mat', '');
+%New: use Ymin, Ymax and prefix
+[imgs_its, tform, ests] = SSR_registration( EmoryMonkeyTimeSeries, ...
+                  'mask', mask, ...
+                  't', tm_pt, ...
+                  'm', imres, ...
+                  'omega', omega, ...
+                  'alpha', alpha, ...
+                  'plot', [], ...
+                  'verbose', 3,  ...
+                  'ymin', 100, ...
+                  'ymax',300, ...
+                  'prefix',prefix);
+   
+

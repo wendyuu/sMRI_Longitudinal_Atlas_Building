@@ -1,0 +1,15 @@
+#BSUB -n 1
+#BSUB -o /nas02/home/i/c/icsapo/tmp/E2D_Synthetic_SSR_cluster.%J.out
+#BSUB -e /nas02/home/i/c/icsapo/tmp/E2D_Synthetic_SSR_cluster.%J.err
+#BSUB -M 4
+#BSUB -J "SSR[1-3]"
+# The above arguments mean:
+#       -n : number of CPUs
+#       -o : output file
+#       -e : error file
+#       -M : memory in GB
+#
+# The following are among the useful environment variables set when each
+# job is run:
+#       %J : job id
+matlab -nojvm -nodisplay -singleCompThread -r 'E2D_Synthetic_SSR_cluster($LSB_JOBINDEX);'

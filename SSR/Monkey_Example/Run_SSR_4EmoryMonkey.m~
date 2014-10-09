@@ -1,0 +1,24 @@
+function Run_SSR_4EmoryMonkey(EmoryMonkeyTimeSeriesmat_struct)
+
+load(EmoryMonkeyTimeSeriesmat_struct'E2D_Synthetic_SSR.mat');
+
+% Inputs:
+%  syntheticTimeSeries - longitudinal image series
+%  mask                - white matter mask of the last time-point
+%  t                   - time-points
+%  m                   - image resolution
+%  omega               - physical image dimension
+[imgs_it] = SSR_registration( syntheticTimeSeries, 'mask', mask, 't', t, ...
+                              'm', m, 'omega', omega, ...
+                              'verbose', 3 );
+
+figure;
+for ii=1:Nt
+    % original images
+    subplot( 2, Nt, ii );    
+        imagesc( imrotate(syntheticTimeSeries(:,:,ii), 90), [0 255] ); colormap gray; axis off;
+        
+    % registered images
+    subplot( 2, Nt, ii+Nt );
+        imagesc( imrotate(imgs_it(:,:,ii), 90), [0 255] ); colormap gray; axis off;
+end
